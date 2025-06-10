@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Gerador de Insight Comercial</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; max-width: 600px; }
+    label { font-weight: bold; display: block; margin-top: 20px; }
+    select, button, textarea { width: 100%; margin-top: 5px; padding: 10px; font-size: 16px; }
+    textarea { height: 150px; margin-top: 20px; }
+    button.copy { margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Gerador de Insight Comercial</h1>
+
+  <label for="perfil">Perfil Comportamental</label>
+  <select id="perfil">
+    <option value="Executor">Executor</option>
+    <option value="Planejador">Planejador</option>
+    <option value="Comunicador">Comunicador</option>
+    <option value="Analítico">Analítico</option>
+  </select>
+
+  <label for="porte">Porte/Estágio da Empresa</label>
+  <select id="porte">
+    <option value="Perfil A">Perfil A: +80 colab / +R$1M</option>
+    <option value="Perfil B">Perfil B: +15 colab / R$300K–1M</option>
+    <option value="MEI">MEI</option>
+    <option value="Abertura">Abertura de Empresa</option>
+    <option value="Holding">Holding Patrimonial / Participações</option>
+    <option value="ME-SN-LP-LR">ME/SN, Lucro Presumido, Lucro Real</option>
+  </select>
+
+  <label for="dor">Dor Principal</label>
+  <select id="dor">
+    <option value="planejamento">Crescimento sem planejamento</option>
+    <option value="lucro">Não vê lucro</option>
+    <option value="dados">Falta de dados para decisão</option>
+    <option value="tributo">Alta carga tributária</option>
+    <option value="financeiro">Desorganização financeira</option>
+    <option value="transparencia">Falta de transparência nas obrigações</option>
+    <option value="processos">Desorganização de processos internos</option>
+    <option value="estrategia">Falta de orientação estratégica</option>
+  </select>
+
+  <button onclick="gerarInsight()">Gerar Insight</button>
+
+  <textarea id="output" readonly placeholder="O insight aparecerá aqui..."></textarea>
+  <button class="copy" onclick="copiarInsight()">Copiar Insight</button>
+
+  <script>
+    function gerarInsight() {
+      const perfil = document.getElementById('perfil').value;
+      const porte = document.getElementById('porte').value;
+      const dor = document.getElementById('dor').value;
+
+      let insight = `Insight para perfil ${perfil}, ${porte}, dor: `;
+      
+      const doresMap = {
+        planejamento: "Está crescendo, mas sem base sólida. Use um tom direto para mostrar como estruturar esse crescimento com inteligência fiscal e estratégica.",
+        lucro: "Apesar do faturamento, o caixa está seco. Mostre como reorganizar o financeiro e revisar a estrutura tributária para gerar lucro real.",
+        dados: "Toma decisões no escuro. Mostre como a contabilidade consultiva pode transformar números em direção clara.",
+        tributo: "Sente que paga muito imposto. Apresente estratégias personalizadas para reduzir a carga tributária legalmente.",
+        financeiro: "Está perdendo o controle financeiro. Mostre como trazer visibilidade e segurança para os números.",
+        transparencia: "Está inseguro com obrigações fiscais e contábeis. Mostre como trazer clareza e previsibilidade.",
+        processos: "O operacional está travando o crescimento. Traga a proposta de organizar os bastidores para liberar o dono para crescer.",
+        estrategia: "Está sem direção clara. Mostre que o contador certo pode virar braço direito estratégico."
+      };
+
+      let frasePerfil = '';
+      switch (perfil) {
+        case 'Executor': frasePerfil = 'Fale de forma objetiva, focando em ganho rápido e resultado direto.'; break;
+        case 'Planejador': frasePerfil = 'Mostre um plano sólido, previsível e com etapas claras.'; break;
+        case 'Comunicador': frasePerfil = 'Use uma linguagem empática, mostre visão de futuro e confiança.'; break;
+        case 'Analítico': frasePerfil = 'Traga dados, lógica e estrutura. Mostre que há método por trás da solução.'; break;
+      }
+
+      
+    insight += `\n\n🔍 Diagnóstico:\n${doresMap[dor]}\n\n` +
+               `🧭 Estratégia sugerida:\n` +
+               getEstrategia(dor, porte) + `\n\n` +
+               `🎯 Estilo de abordagem:\n${frasePerfil}`;
+    
+      document.getElementById('output').value = insight;
+    }
+
+    
+    function getEstrategia(dor, porte) {
+      const estrategias = {
+        planejamento: {
+          'Perfil A': "Aplicar um planejamento tributário e reorganizar centros de custo para escalar com controle.",
+          'Perfil B': "Montar um plano financeiro básico e migrar para regime mais eficiente.",
+          'default': "Estruturar desde já uma base contábil e tributária sólida para evitar dor futura."
+        },
+        lucro: {
+          'Perfil A': "Analisar margem por produto/serviço e ajustar o regime fiscal para lucratividade.",
+          'Perfil B': "Focar em enxugar despesas invisíveis e rever forma de retirada de pro-labore.",
+          'default': "Identificar o ponto de equilíbrio e reorganizar o plano de contas."
+        },
+        dados: {
+          'Perfil A': "Criar dashboards de gestão por centro de resultado.",
+          'Perfil B': "Implantar relatórios mensais simples com foco em DRE gerencial.",
+          'default': "Iniciar com um controle de fluxo e DRE mensal simplificado."
+        },
+        tributo: {
+          'Perfil A': "Comparar Lucro Real vs Presumido e revisar enquadramento de CNAEs.",
+          'Perfil B': "Simular impacto de migrar do Simples para Presumido.",
+          'default': "Planejar abertura ou estruturação com base no melhor regime desde o início."
+        },
+        financeiro: {
+          'Perfil A': "Integrar contabilidade e financeiro para previsibilidade de caixa.",
+          'Perfil B': "Implantar rotina básica de contas a pagar/receber + DRE mensal.",
+          'default': "Educar o cliente a registrar entradas e saídas já na abertura."
+        },
+        transparencia: {
+          'Perfil A': "Criar calendário fiscal com previsões claras e regras bem definidas.",
+          'Perfil B': "Usar ferramenta de comunicação mensal simples e visual.",
+          'default': "Educar com agenda mensal e acompanhamento próximo no início."
+        },
+        processos: {
+          'Perfil A': "Mapear gargalos internos e estruturar com fluxos e checklist fiscal.",
+          'Perfil B': "Padronizar entregas mensais e registros contábeis com rotina simples.",
+          'default': "Orientar já na abertura como montar o processo básico de controle."
+        },
+        estrategia: {
+          'Perfil A': "Atuar como conselheiro técnico com visão de dados e futuro tributário.",
+          'Perfil B': "Oferecer mentoria básica de gestão contábil e financeira.",
+          'default': "Mostrar como o contador pode ser peça estratégica desde o primeiro passo."
+        }
+      };
+      return estrategias[dor][porte] || estrategias[dor]['default'];
+    }
+
+
+function copiarInsight() {
+      const text = document.getElementById('output');
+      text.select();
+      document.execCommand('copy');
+      alert('Insight copiado para a área de transferência!');
+    }
+  </script>
+</body>
+</html>
